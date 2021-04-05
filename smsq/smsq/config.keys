@@ -1,0 +1,34 @@
+; Config Area Definition SMSQ
+	nolist
+
+sms_idapt  equ	0	   ; byte	initial display adapter
+sms_immu   equ	0	   ; byte	set to set up mmu
+sms_cpar   equ	1	   ; byte	0 if no par port
+sms_issqr  equ	2	   ; byte	1 for square pixels
+sms_csr1   equ	2	   ; byte	0 if no ser1 port
+sms_csr2   equ	3	   ; byte	0 if no ser2 port
+sms_bflp   equ	4	   ; byte	0 no floppy boot, 1 or 2
+sms_bwin   equ	5	   ; byte	BOOT WIN drive
+sms_defl   equ	6	   ; word	default keyboard language
+sms_btarg  equ	8	   ; byte	boot target
+sms_ieee   equ	8	   ; byte	use ieee floats for some operations? (SMSQMulator)
+sms_bpart  equ	9	   ; byte	boot partition
+sms_idisp  equ	$a	   ; 6 words	initial disp_size
+sms_issize equ	$a	   ; byte	initial screen size (VGA / Aurora)
+sms_ismode equ	$b	   ; byte	initial screen mode
+sms_xres   equ	$c	   ; word	initial x resolution
+sms_crd2   equ	$c	   ; byte	card 2 init during boot (Q68)
+sms_q68mse equ	$d	   ; byte	read mouse per poll or interr. (Q68)
+sms_yres   equ	$e	   ; word	initial y resolution
+sms_led    equ	$e	   ; byte	led state after OS setup (Q68)
+sms_acsir  equ	$16	   ; byte	ACSI auto detect removable (Atari)
+sms_nqimi  equ	$16	   ; byte	ignore qimi (Gold card)
+sms_winkbd equ	$16	   ; byte	use windows keyboard tables (QPC)
+sms_clock  equ	$17	   ; byte	clock speed (QXL)
+sms_128k   equ	$18	   ; byte	set if reset for small memory
+sms_dlan   equ	$1a	   ; word	default messages language
+sms_kstuf  equ	$1c	   ; byte	key used to stuff into buffer in cn_edlin
+sms_curd   equ	$1d	   ; byte	use sprite as cursor?
+sms_bgio   equ	$1e	   ; byte	enable CON background I/O?
+sms_ctrlc  equ	$1f	   ; byte	use new CTRL+C behaviour?
+	list

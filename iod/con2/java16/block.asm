@@ -1,0 +1,86 @@
+;	Draw a rectangular block 16 bit colour	v2.00   1998  Tony Tebby
+;
+;	2.02 (c) W. Lenerz 2016 Oct 23
+;
+;	The block size and origin are assumed to have been adjusted for
+;	correct position within the area to be set.
+;
+;	Registers:
+;		Entry				Exit
+;	D0					smashed
+;	D1	block size			smashed
+;	D2	block origin			smashed
+;	D3-D5					smashed
+;	D6	stipple
+;	D7	colour mask			smashed
+;	A1	area base address		smashed
+;	A2	area row increment		smashed
+;
+;	All other registers preserved
+
+	section con
+
+	xdef	cn_fblock
+	xdef	cn_xblock
+
+	xdef	bm_block
+	xdef	bm_xblok
+
+	xdef	cn_clr2lw
+	include 'dev8_keys_java'
+
+bm_xblok
+	moveq	#jt5.xbkbm,d0
+	dc.w	jva.trp5
+
+cn_xblock
+	moveq	#jt5.xorbk,d0
+	dc.w	jva.trp5
+
+cn_fblock
+	moveq	#jt5.fblk,d0
+	dc.w	jva.trp5
+
+bm_block
+	moveq	#jt5.fbkbm,d0
+	dc.w	jva.trp5
+
+
+; set colour masks
+;
+;	d6 cr	stipple / even row colours
+;	d7 cr	colours / odd row colours
+;
+cn_clr2lw
+	add.w	d6,d6
+	move.w	cnc_table(pc,d6.w),d0
+	move.l	d7,d6			 ; colour in both long words
+	jmp	cnc_table(pc,d0.w)
+
+	dc.w	cnc_solid-cnc_table
+cnc_table
+	dc.w	cnc_1of4-cnc_table
+	dc.w	cnc_horiz-cnc_table
+	dc.w	cnc_vert-cnc_table
+	dc.w	cnc_check-cnc_table
+
+cnc_1of4
+	swap	d6
+	move.w	d6,d7			 ; odd row is solid
+	swap	d6
+	rts
+
+cnc_horiz
+	swap	d7			 ; odd row is contrast
+	move.w	d6,d0
+	move.w	d7,d6			 ; odd row is main colour
+	move.w	d0,d7
+	rts
+
+cnc_check
+	swap	d6			 ; even row is different
+cnc_solid
+cnc_vert
+	rts
+
+	end

@@ -1,0 +1,503 @@
+yAs of versions 3.00, this file contains a brief overview of what is new in
+each version of SMSQ/E.
+
+
+A more detailed description of the changes made to the source code itself
+is contained in changes_txt.
+
+Moreover, there is a directory called "New" in the "extras" subdirectory.
+
+This contains documentation on the new features that are introduced with
+new versions of SMSQ/E, to the extent that such documentation exists.
+Please note that, for the sake of completeness, the same documentation also
+exists in the "extras_doc" directory. For each new version of SMSQ/E, the content
+of the "extras_new" directory is erased and only the documentation/description
+of new features are kept in that "extras_new" directory.
+
+
+This here file only contains a short description of the new features.
+
+
+What is new in versions :
+
+
+=====
+3.37
+=====
+Various bugfixes
+QL-SD network code included, new basic utilities
+SMSQmulator support for UDP/UDD devices
+Nul device and ramdisk for Qdos can be made
+Q-emulator no longer needs special mouse (driver)
+Adapted for QPC 5.
+Qsound support (only QPC is support ATM).
+Q68 can use 16 bit transfer, higher card read speed (needs firmware upgrade)
+(For the last two, see the documentation in extras_new_)
+
+
+=====
+3.36
+=====
+Spanish keyboard and system messages are handled.
+Better handling of drive names via iof.xinf.
+Q68, cards need not be initilized for normal access.
+Qx0 can read contaziner files from the first four partitions.
+WIN drives made removale for SMsQmulator
+
+
+=====
+3.33
+=====
+
+Final bugfix for LRESPR in procedures.
+Better QL networking.
+Gold card is configured not to use ABC keyboard.
+Improvements in standard QL EE.
+Q68 & SMSQmulator better SSSS handling.
+Stand-alone TK II and QL-SD replacement drivers are included in the SMSQ/E sources.
+Qx0 may have a compressed SMSQ/E so newer versions fit in the EPROMs.
+
+
+=====
+3.32
+=====
+
+Bugfixes:
+There are various bugfixes for network drive names resolution.
+QPC & SMSQmulator use the correct SQRT replacement routines.
+QPC better handling of removable drives.
+
+Additional features:
+Filesystem for FAT16 disks of up to 256 MiB (currently only ysed in Q68).
+Filesystem for QUBide drives.
+
+Q40/Q60:
+It is now possible to use IDE hard disks formatted with FAT32 and contining
+QXL.WIN "drives" (see explanation in the extras_new directory).
+The purpose of this is to allow easier data exchange between the Qx0 and the
+rest of the QL world : Adapters exist which will plug into the Q40 IDE connector
+and can read SDHC memory cards. If you format such a card on FAT32, you can
+exchange QXL.WIN drives easily!
+
+DISP_MODE command for Qx0 introduced.
+
+Q68:
+Q68 version of SMSQE introduced.
+
+
+=====
+3.31
+=====
+
+RPIXL also works for 8 and 16 bit colour modes.
+Bugfix for LRESPR in procedures.
+Bugfix for home thing.
+
+
+=====
+3.30
+=====
+
+QPC Bugfix for installation slices.
+SMSQmulator links in floppy driver again.
+
+
+=====
+3.29
+=====
+
+Bugfix: Input buffer size limited to $7ffe
+
+
+=====
+3.28
+=====
+
+Bugfix by Marcel kilgus. With a string like a$="1234", print a$(5 to) would
+not give an error (though print a$(5) did).
+The new function FSEND_EVENT is the same as SEND_EVENT but returns error code.
+SMSQEmake can autoresize when targets are added/deleted.
+
+
+=====
+3.27
+=====
+
+Bugfix:  the maximum string array size is 32766, not 32767.
+
+
+=====
+3.26
+=====
+
+All channel operations can use alpha blending. See the "display_txt" file in
+the new or doc directory, section IX.
+Rename for QPC Dos devices.
+
+
+=====
+3.25
+=====
+
+Bugfixes: Fixed crash for slightly overlapping windows.
+
+
+=====
+3.24
+=====
+
+Bugfixes: CKEYON/CKEYOFF
+When jobs are created, the size of the job, and the data space, are made even.
+
+Support fot the  Recent thing. Please read the documentaton in extras_doc_.
+By default, the recent thing is switched OFF. To switch it ON, you must
+configure the SMSQ/E file for your system.
+!!
+SMSQ/E uses a new system variable sys_rthg, a byte at $017D.
+!!
+
+
+=====
+3.23
+=====
+
+Bugfixes : DMEDIUM_TYPE, ...DENSITY, ...FORMAT work OK with nbrs, ...NAME$ returns correct name.
+SMSQmulator keyrow bugfix.
+
+
+=====
+3.22
+=====
+
+Atari ST and STE monochrome modes work again.
+FEX_M keyword : is the same as EX_M but as a function.
+Bugfix : better edge detection when moving window in movemodes 1 and above.
+SMSQmulator bugfixes.
+
+
+=====
+3.21
+=====
+
+Bugfix : If you try to make a directory and a file that has channels open to
+it would be moved to that directory, the directory is NOT created. Note: in
+that case an empty file with the name ofthat directory will have been created.
+In other words : when you create a directory, don't have channels open to files
+that would have to be moved into the new directory .
+
+SMSQmulator uses the SMSQ/E dv3 drivers for floppy access.
+
+
+=====
+3.20
+=====
+
+Bugfix : check for read only if single byte send to dv3 channel.
+SMSQmulator specifc : timer added.
+
+
+=====
+3.19
+=====
+
+QPC specific code integrated.
+Appsub window CSIZE bugfix.
+
+
+
+=====
+3.18
+=====
+Different CSIZEs in application windows.
+
+
+=====
+3.17
+=====
+Bugfix.
+
+
+=====
+3.16
+=====
+Several bugfixes.
+Window move with transparency.
+
+
+=====
+3.15
+=====
+
+Several bugfixes.
+The code base now incorporates the GoldCard drivers for 256 colours.
+The code base now incorporates the files for non SMSQ/E pointer gen & wman.
+
+
+======
+ 3.14
+======
+A new SMSQE version, for SMSQmulator  (subdir smsq_java)
+
+
+======
+ 3.13
+======
+
+Several bugfixes.
+
+For QXL users, the keyboard LEDs should work now.
+QPC Numlock should work now.
+New CTRL+C behaviour - instead of poppoing up the last jobs on the window
+stack, it'll pop up the least recently used job.
+
+Background IO made configurable.
+New keywords (functions) YEAR%, MONTH% DAY%, and WEEKDAY%
+DAY%,MONTH% and YEAR% return the day/month/year of a certain date (same
+parameters as for DATE$)
+WEEKDAY% returns the day of the week  (Monday = 1, tuesday = 2 etc) (same parameters as for DATE$)
+
+Faster job execution.
+
+
+======
+ 3.12
+======
+
+Background drawing: Even when a window is partially covered, printing into
+this window continues. This goes with two new BAsic commands: PE_BGON to
+turn this feature on, PE_BGOFF to turn this feature off.  By default, this
+feature is TURNED OFF, so use the PE_BGON command in your boot file
+if you want to keep it on.
+
+
+Better support for the Home thing.
+
+Improved Qx0 cache handling.
+
+Improved History device.
+
+Basic has a new command line history: if you press the up/down arrows, you get
+the latest commands entered.
+
+New Basic command JOBID:
+result = JOBID [({nr, tag} | <name> )] named job id or my id (no parameters)
+
+
+Jochen Merz donated the source code for the "uti" and "util_menus" libraries
+to the SMSQE source code. Hence, the libraries are no longer used, we use
+the direct files instead.
+
+New commands POKE_F, POKES_F,PEEK_F, PEEKS_F for flaoting point poking/peeking
+
+
+======
+ 3.11
+======
+
+Support for the home thing.
+
+
+======
+ 3.10
+======
+
+Cursor Sprite Clipping is implemented:
+
+The cursor sprite, when reaching the edges of the screen is "clipped" until its
+origin.
+
+Sprites with no (= solid) masks are implemented. These take less space.
+
+Some bugfixes.
+
+
+======
+ 3.09
+======
+
+The GET_HOTSTUFF$ command is introduced.
+
+This permits you to get at the content of the stuffer buffer.
+
+Syntax:
+
+a$=GET_HOTSTUFF$(parameter)
+
+If no parameter, or parameter = 0: get the current content (same as ALT SPACE).
+If parameter = -1: get the previous content (same as ALT SHIFT SPACE).
+
+
+It is possible to restart the QXL SMSQE by typing SMSQE / under DOS.
+
+
+The Qx0 code no longer contains the cachecontrol module, please use Mark
+Swift's extentions again (on which this module is based, anyway).
+
+The Qx0 in ROM starts with the cache disabled again.
+
+
+
+======
+ 3.08
+======
+(nothing)
+
+
+======
+ 3.07
+======
+
+There is a new keyword:
+EX_M: This behaves a bit like EX in that the calling job continues executing
+(like EX and contray to EW) but the job created is owned by the calling job
+(like EW). This means that if you get rid of the calling job, you will also get
+rid of the created job(s).
+
+A treat for QXL owners: Thanks to Bruno COATIVY, you can now configure
+what dos drive letters (C:, D: etc) corresponds to win1_, win2_ etc...
+Just configure the new SMSQE.EXE file, under the "Host" section.
+
+The Q40 flp density workaround in v. 3.06 now works. This is a 1 byte change
+in 1 source file, and I still managed to get it wrong!
+
+
+======
+ 3.06
+======
+The "Quit" keyword takes an optional parameter (long int) that is passed to
+the calling job. For example, you could have two basic programs,
+the first calling the second with
+   return_code=FEW(your_second_program)
+
+The Q40 flp density is preset to High (1.44 MB disks). This is a workaround
+for a bug that stops flp format working if the drive was never accessed before
+and no flp density was set explicitly. If you want to format other density
+disks you must set the density to D or E.
+
+Sprites (of 6x10 size) may be used as cursor. See the documentation in
+dev8_extras_new_cursor_txt
+
+Attempt to have Gold Card Miracle hard disks working again.
+
+
+=============
+ 3.04 & 3.05
+=============
+Simple bug fixes.
+Display bug fix.
+The smsqemake_exe program takes new parameters (see the doc in the
+_extras_help dir).
+
+
+======
+ 3.03
+======
+1 - Many bugfixes.
+
+2 - A new cachecontrol module for the Q60, based on Code kindly supplied by
+Mark Swift.
+This introduces three new keywords which were contained in Mark Swift's
+Cachemodes toolkit that comes with the Qx0:
+
+SERIALIZED
+This turns the Caches OFF
+
+WRITETHROUGH
+This command turns the "writethrough" cache mode of 68040 &
+68060 processors ON. Writing to a memory address writes both to the
+cache and to memory, so cache and memory are always in sync.
+
+
+COPYBACK
+This command turns the copyback cache mode of 68040 & 68060
+processors ON. Enabling the COPYBACK cache can give substantial
+speed increases. Writing to a memory address will write to the
+cache, but not to memory until absolutely necessary. Thus cache
+and memory are rarely in sync.
+This can lead to some incompatibilities.
+With these three keywords, you can use the cache mode you want.
+You can configure in what state your machine should boot.
+
+3 -Left and right shift keys are handled separately:
+Up to now, if you pressed both shift keys at once and then released only one,
+the system also considered that you had released the other.
+
+4 - INPUT uses F10 (or any other configured keystroke) to put the content of
+the "console" channel into the stuffer buffer in a READ/EDIT line trap (only!).
+You can configure the keystroke with the usual configuration program.
+You must input a number between 0 and 255. This corresponds to the keycode
+of the key in question.
+If you are unsure about what key produces what code, you could do the following:
+Type in:    PRINT CODE ( INKEY$ (-1) )
+followed by Enter into any Sbasic.
+Now hit the key you want to use. The corresponding number will be printed
+on the screen.
+This is 250 for the suggested F10 key.
+     
+
+======
+ 3.02
+======
+
+Bugfixes
+
+
+======
+ 3.01
+======
+
+Apart from some small bugfixes , in this version there is a new routine to
+move the windows about the screen.
+
+There are now three ways this can be done:
+
+0 - the old way - the pointer changes to the "move window" sprite which is
+moved about the screen.
+
+1 - "Outline": the outline of the window is moved with the mouse
+
+2 - Full window : the entire indow is moved with the mouse
+
+Please read the "move_txt' documentation for more details.
+
+
+On a more anecdotical scale, the doc, exe, help, new subdirectories
+have all been moved into the extras subdirectory.
+
+
+There is also a new program that will (or is supposed to) make compilation
+of the sources a bit easier. This is  extras_exe_smsqemake. The documentation
+is in extras_help_smsqemake_doc or _txt
+
+
+----
+3.00
+----
+
+
+SMSQ/E version 3.00 comes with many new features, notably:
+
+*  a new window manager, WMAN, which has:
+			
+   - more colours usable from WMAN
+   - system palettes usable by jobs
+   - more sprite forms are implemented (different modes)
+   - sprites that can use alpha blending and RLE compression
+   - sprites in loose items that may change according to the status of the item
+     (for all : see display_txt)
+
+*  system sprites are handled completely differently, it is expected that
+   the list will be extended
+
+*  background colours no longer take up memory
+
+*  New keywords (FEX etc) for extended job control
+     (see doc_FEX_txt)
+
+*  a help index for those using QD, useful for finding a file containing a
+   certain label (see doc_help_index_txt).
+
+* better Q40 disk partitions handling
+
+
+Descriptions in HTML and text.

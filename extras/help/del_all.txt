@@ -1,0 +1,26 @@
+Del_all_bas
+
+
+This little basic program (in the extras subdirectory) will delete
+all  lib, rel, err, map and log  files and all targets compiled on
+dev8_.
+
+
+To  use   this  program  (the  procedures   used  should  be  self
+explanatory), you  need the cline_bin extension,  which adds a new
+keyword  "Current_line" (see the  help file for  cline). Just load
+this file with LRESPR. You  can  find  this  file  in  the  extras
+directory.  You also need the "blinker_bin" file, also loaded with
+LRESPR and also in  the extras  directory (see  the help  file for
+that).
+
+
+I use the del_all program for two reasons:
+
+-  to make sure, every time I recompile something, that everything
+is recompiled afresh.  This way,  the compiler/linker  might catch
+some errors.
+
+-  to delete all of the non essentials files when distributing the
+source (it makes for smaller zip files).
+

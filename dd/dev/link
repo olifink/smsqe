@@ -1,0 +1,17 @@
+program dev8_dd_dev_rext
+
+section base
+section version
+section language
+
+input dev8_dd_dev_base_rel
+;library dev8_dd_dev_lib
+input dev8_dd_dev_use_rel
+input dev8_dd_dev_init_rel
+input dev8_dd_dev_version_rel
+input dev8_dd_dev_open_rel
+library dev8_iod_iou_lib
+library dev8_sbsext_utq_lib
+library dev8_util_gut_lib
+library dev8_util_cv_lib
+library dev8_util_dummy_lib

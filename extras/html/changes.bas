@@ -1,0 +1,150 @@
+100 REMark   THIS PROGRAM MAKES THE HTML FILE "CHANGES_HTML"
+110 REMark   USED ON THE SMSQE WEBSITE.
+120 :
+130 REMark   THE RESULTING FILES ARE COPIED TO NFA2_
+140 REMark   WHICH SHOULD POINT TO THE "website" subdir
+150 :
+160 REMark   THIS  PROGRAM NEEDS THE FILES "CHANGES_HEADER" AND "CHANGES_FOOTER" WWHICH SUOUULD
+170 REMark   LIE IN THE EXTRAS8HTML SUBDIRECTORY.
+180 :
+190 REMark   THE INFO IS TAKEN FROM THE "CHNAGES_TXT" FILE IN DEV8_
+200 :
+210 REMark   THIS PROGRAM IS COPYRIGHT (C) W. LENERZ 2004-2018
+220 REMark   ALL RIGHTS RESERVED.
+230 :
+240 p
+250 :
+260 DEFine PROCedure init
+270   lg$='class="lightTD"'
+280   dg$='class="darkTD"'
+290 END DEFine init
+300 :
+310 DEFine PROCedure make_into_html(mfile$,resfile$)
+320 LOCal inc%,outc%,lp%,a$,lp2%,lp3%,t%,t1%
+330   inc%=FOP_IN(mfile$)
+340   IF inc%<0:RETurn
+350   outc%=FOP_OVER(resfile$)
+360   IF outc%<0
+370     CLOSE#inc%
+380     RETurn
+390   END IF
+400   init
+410   lp%= " " instr cmd$
+420   if lp%
+430     today$= cmd$(1 to lp%-1)
+440   else
+450     today$=" (unnown)"
+460   end if
+470   copy_file "dev8_extras_html_changes_header",outc%
+480   REPeat lp%
+490     INPUT#inc%,a$
+500     IF "----------" INSTR a$:EXIT lp%   : REMark get to first separator
+510   END REPeat lp%
+520   REPeat lp%
+530     IF EOF(#inc%):EXIT lp%
+540     a$=ginput$                          : REMark this is the version
+550     IF a$="":NEXT lp%                   : REMark what? premature end!
+560     PRINT#outc%;"  <BR><p><p>"
+570     PRINT#outc%;"  <H2>SMSQ/E Version "&a$&"</H2>"
+580     PRINT#outc%;"  <p> "
+590     PRINT#outc%;'          <TABLE ';lg$;' border=0 cellPadding=5 cellSpacing=1 Width="100%">'
+600     PRINT#outc%;"            <TBODY>"
+610 REMark now the headers & data within this version
+620     REPeat lp2%
+630       a$=ginput$
+640       IF a$="":EXIT lp2%
+650       t%=CODE (a$)
+660       IF t%>64 AND t%<90
+670         PRINT#outc%;"              <TR>"
+680         PRINT#outc%;"                <TD ";lg$;" ><B>"&a$&"</B></TD>"
+690         PRINT#outc%;"              </TR>"
+700          ELSE
+710         PRINT#outc%;"              <TR>"
+720         t%=" "INSTR a$                  : REMark end of filename
+730         t1%=CHR$(9) INSTR a$
+740         IF NOT t%:t%=t1%
+750         IF (t1%) AND (t1%<t%):t%=t1%
+760         IF t%
+770           b$=a$(1 TO t%-1)
+780           PRINT#outc%;"                <TD ";dg$;" > "&b$&"</TD>"
+790         ELSE
+800           PRINT#outc%;"                <TD ";dg$;" > "&a$&"</TD>"
+810           PRINT#outc%;"                <TD ";dg$;" > </TD>"
+820           PRINT#outc%;"                <TD ";dg$;" > </TD>"
+830           PRINT#outc%;"              </TR>"
+840           NEXT lp2%
+850         END IF
+860         a$=strip_tab$(a$(t%+1 TO))     : REMark strip off filename
+870         t%=" " INSTR a$
+880         t1%=CHR$(9) INSTR a$
+890         IF NOT t%:t%=t1%
+900         IF (t1%) AND (t1%<t%):t%=t1%
+910         b$=a$(1 TO t%-1)               : REMark the version
+920         IF b$<>""
+930           PRINT#outc%;"                <TD align=middle "&dg$&">"&b$&"</TD>"
+940           a$=strip_tab$(a$(t%+1 TO))   : REMark strip off version, get comments
+950           IF a$<>""
+960             PRINT#outc%;"                <TD "&dg$&">"&a$&"</TD>"
+970           END IF
+980         END IF
+990         PRINT#outc%;"              </TR>"
+1000       END IF
+1010     END REPeat lp2%
+1020     PRINT#outc%;"            </TBODY>"
+1030     PRINT#outc%;"          </TABLE>"
+1040   END REPeat lp%
+1050   copy_file "dev8_extras_html_changes_footer",outc%
+1060   PRINT#outc%;"<br><br>"
+1070   print#outc%,"Page last updated on ";today$;"."
+1080   CLOSE#outc%
+1090   CLOSE#inc%
+1100 END DEFine make_into_html
+1110 :
+1120 DEFine PROCedure copy_file (mfile$,chan%)
+1130 REMark copy content of text file mfile$ into channel chan%
+1140 LOCal inc%,lp%,a$
+1150   inc%=FOP_IN(mfile$)
+1160   IF inc%<0:RETurn                         : REMark open file failed
+1170   REPeat lp%
+1180     IF EOF(#inc%):EXIT lp%
+1190     INPUT#inc%,a$                       : REMark get one line
+1200     PRINT#chan%,a$                      : REMark and print it
+1210   END REPeat lp%
+1220   CLOSE#inc%
+1230 END DEFine copy_file
+1240 :
+1250 DEFine FuNction ginput$
+1260 LOCal lp%,a$
+1270   REPeat lp%
+1280     IF EOF(#inc%):RETurn ""
+1290     INPUT#inc%,a$
+1300     a$=strip_tab$(a$)
+1310     IF "-------" INSTR a$:RETurn ""
+1320     IF a$<>"":RETurn a$
+1330   END REPeat lp%
+1340 END DEFine ginput$
+1350 :
+1360 DEFine PROCedure p
+1370   PRINT 'Remember, each version must be separated by "----------------"'
+1380   make_into_html  "dev8_changes_txt";"NFA8_html_chngelog.html"
+1390   PRINT "done"
+1400   PRINT "copied to NFA8_html_chngelog.html"
+1410   IF "quit" instr cmd$:QUIT
+1420 END DEFine p
+1430 :
+1440 DEFine PROCedure sa
+1450   SAVE_O dev8_extras_html_changes_bas
+1460 END DEFine sa
+1470 :
+1480 DEFine FuNction strip_tab$(a$)
+1490 REMark returns string stripped of tab and spaces
+1500 LOCal b$,t%,lp%
+1510   b$=STRIP_SPACES$(a$)
+1520   IF b$="":RETurn ""
+1530   REPeat lp%
+1540     IF b$(1)<> CHR$(9):RETurn STRIP_SPACES$(b$)
+1550     IF LEN(b$)=1:RETurn ""
+1560     b$=b$(2 TO)
+1570   END REPeat lp%
+1580   RETurn ""
+1590 END DEFine strip_tab$

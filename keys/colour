@@ -1,0 +1,91 @@
+*         Standard colour palette for Menus
+
+          include 'dev8_keys_syspal'
+
+          nolist
+
+*
+*         Main window colours
+*
+c.mbord   equ     sp.winbd
+c.mback   equ     sp.winbg                     ; window attributes
+c.mink    equ     sp.winfg
+c.mhigh   equ     sp.litemhigh                 ; item highlight
+c.bbord   equ     sp.butbd                     ; button main window border
+c.bback   equ     sp.butbg                     ; button main window background
+c.bink    equ     sp.butfg                     ; button main window ink
+c.bhigh   equ     sp.buthigh                   ; button main window highlight
+c.tback   equ     sp.titletextbg               ; title text background
+c.tink    equ     sp.titlefg                   ; title ink
+*
+c.mfill   equ     sp.titlebg                   ; main area fill
+c.mvert   equ     sp.vertfill                  ; vertical area fill
+c.mshade  equ     sp.shaded                    ; shaded
+c.moutl   equ     sp.infwinbd                  ; and outline
+c.lines   equ     sp.separator                 ; separator lines etc.
+*
+c.stfill  equ     sp.subtitbg                  ; sub title fill
+c.stback  equ     sp.subtittxtbg               ; sub title text background
+c.stink   equ     sp.subtitfg                  ; sub title text ink
+*
+c.miunav  equ     sp.litemunafg                ; loose item - unavailable
+c.mpunav  equ     sp.litemunabg
+c.miavbl  equ     sp.litemavafg                ;            - available
+c.mpavbl  equ     sp.litemavabg
+c.mislct  equ     sp.litemselfg                ;            - selected
+c.mpslct  equ     sp.litemselbg
+c.mislc1  equ     $00      black               ;             (alt)
+c.mpslc1  equ     $04      green
+c.biavbl  equ     $00      black               ; and for buttons
+c.bpavbl  equ     $07      white
+c.bislct  equ     $07      white
+c.bpslct  equ     $00      black
+
+          ; information window colours
+
+c.ibord   equ     sp.infwinbd
+c.iback   equ     sp.infwinbg
+c.iink    equ     sp.infwinfg
+c.ilow    equ     sp.infwinmg
+
+          ; subsidiary information window colours
+
+c.sbord   equ     sp.subinfbd
+c.sback   equ     sp.subinfbg
+c.sink    equ     sp.subinffg
+c.slow    equ     sp.subinfmg
+
+          ; White application sub-window colours
+
+c.wbord   equ     sp.appbd
+c.wback   equ     sp.appbg                     ; window attributes
+c.wink    equ     sp.appfg
+c.whigh   equ     sp.appihigh
+
+c.wiunav  equ     sp.appiunafg                 ; item - unavailable
+c.wpunav  equ     sp.appiunabg
+c.wiavbl  equ     sp.appiavafg                 ;      - available
+c.wpavbl  equ     sp.appiavabg
+c.wislct  equ     sp.appiselfg                 ;      - selected
+c.wpslct  equ     sp.appiselbg
+
+c.wrrow   equ     sp.scrbararr                 ; pan / scroll
+c.wbarb   equ     sp.scrbar
+c.wbars   equ     sp.scrbarsec
+
+        ; error colours
+
+c.erpap   equ     sp.errbg                     ; error paper
+c.erink   equ     sp.errfg                     ; error ink
+
+        ; help tooltip colours
+
+c.hbord   equ     sp.hintbd
+c.hink    equ     sp.hintfg
+c.hback   equ     sp.hintbg
+
+        ; menu index
+c.mipap   equ     sp.mindexbg                   ; menu index background
+c.miink   equ     sp.mindexfg                   ; menu index foreground
+
+          list

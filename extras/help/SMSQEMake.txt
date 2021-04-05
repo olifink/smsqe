@@ -1,0 +1,384 @@
+			 *****************
+			 *		 *
+			 *   SMSQEMake	 *
+			 *		 *
+			 *****************
+
+
+
+A program to facilitate compilation & linking of the SMSQ/E sources.
+
+
+
+     I - Purpose of this program
+
+     II - Requirements
+
+     III - How to use this program
+
+     IV - Recompiling or changing the program
+
+
+
+
+I - Purpose of this program
+===========================
+
+SMSQEMake is intended  to make	compiling and  linking the  sources for
+SMSQ/E easier. It  is a  replacement for  the "make_bas"  and "flp_bas"
+files found in the  smsq_  directory  for  each  of  the  targets.  For
+this,you are presented with the names  of  the	link  files.  You  then
+select theones you want to have recompiled.
+
+
+The  very short version of using the program - if you are impatient and
+the sources are on a qxl.win container - is:
+
+
+LOAD  "winX_extras_compile_boot" where X is  the device the sources
+are on. Modify line 100 to have the "dev_use 8,win2_" command point
+to your  win drive with the sources.  Then RUN this program. Select
+the  target(s) you want  : at least  the generic +  the machine you
+want to compile  SMSQE for. Select  "Make" and "All".  Hit "OK" and
+wait until  compilation is compelete.  A warning window  pops up if
+there were errors during compilation.
+
+
+Please	note that, if you  want to use the  "drive" item, this software
+needs the menu extensions. Normally there should be no need to use this
+item, hence the menu extensons are not needed.
+
+There are also some  other requirements  if you  want to  recompile the
+SMSQEMake program itself (see at the end of this document).
+
+SMSQEMake  does presume that  the sources are  on one drive  and in the
+usual directories. The drive MUST  be  called  "dev8_"	:  all	of  the
+sources presume that they are on a drive called dev8_ - so you need the
+dev device which is already contained in SMSQ/E.
+
+Apart from the menu extensions,  all  other  extensions  necessary  are
+already contained in the compiled version of the program.
+
+Moreover,  if  you  downloaded	the  complete  qxl.win	container,  all
+ancillary programs (assembler, linker etc) are also on the disk.
+
+So,  unless you want to see what other programs are required, you could
+now just skip right  to  the  next  section  (III  -  Purpose  of  this
+software, below).
+
+
+
+II - Requirements
+=================
+
+
+The requirements  for a successful  compilation of SMSQ/E  are that you
+will need  a "dev" device, an assembler,  a linker, the "make" program,
+plus  a concatenator. These are all supplied together with the sources,
+the DEV device can be found in SMSQ/E itself.
+
+
+A - The DEV device
+
+The  source files are set up in such a way that they expect to be found
+on a device called "DEV8_".
+
+Dev is the  usual SMSQ/E  "dev" device	which can  refer to  any actual
+physical device, you should use DEV_USE 8, xxx to set this up. Thus, if
+the source files are or, say , win6, use:
+
+DEV_USE 8, win6_
+
+
+B - The assembler
+
+You  will also need an assembler to compile the individual source files
+into what  are know as	"_rel" files, i.e.  relocatable compiled files,
+which are later bound together by a linker.
+
+For  the time being, the assembler must  be the QMAC Assembler. This is
+available in the dev8_extras_exe_ directory.
+
+
+C - The linker, cctf and make programs and how to use them.
+
+
+On the	source device,	in the	"exe" subdirectpry,  you will  find the
+Linker, cctf, cct and Make programs.
+
+It  is recommended, but not strictly  necessary, to load the assembler,
+the linker and the make programs as resident programs via hotkeys, such
+as:
+
+ert hot_res('z',<device>_make)
+ert hot_remv('z')
+ert hot_res ('z',<device>_linker)
+ert hot_remv('z')
+ert hot_res ('z',<device>_QMAC)
+
+You don't HAVE  to do  this, but  the Make  program always  attempts to
+execute  the Assembler and Linker from	an executable thing rather than
+an executable file first.
+
+If you	don't do that,  you must make  sure that these  programs can be
+found in the  "prog_use" path. If  they acannot be  found as executable
+things,  nor in the  prog_use path, the  make program won't  be able to
+find them and will crash.
+
+The cctf program should lie in the normal prog_use path.
+
+Here  is a short description of what  each of these programs does, even
+though	it is not necessary  to know this to  use SMSQEMake, which will
+drive the programs normally.
+
+
+1 - The Make Program
+
+
+This software takes  a simple  linker command  file (_link)  and checks
+which files have to be re-assembled, it then assembles them, and causes
+the linker to be executed.
+
+The presumes that  your computer keeps	a correct time	and date, since
+the files' timestamps are  used by  the make  program to  check whether
+they need to be re-compiled or not.
+
+The  Make program also presumes that you  have a program called QMAC to
+compile  all files that need to be compiled, a piece of software called
+Linker to link them and a program called cctf to concatenate libraries.
+
+The  make is a compiled Sbasic program. The source of that can be found
+in  the "exe" directory under the "source" sub-directory - you can thus
+change it to your  heart's content.  It also  needs a  special toolkit,
+which is called OUTPTR_BIN  and can  also be  found under  the "source"
+subdirectory.
+
+
+2 - The linker
+
+The linker  is responsible for linking the  _rel files generated by the
+assembler. It will generally be called from the Make program and should
+be loaded as mentioned above.
+
+
+3 - CCTF
+
+The purpose of the cctf program  is  to  concatenate  _rel  files  into
+libraries. It  should simply be put into  your normal prog_use path. If
+you want to use it by hand, use it as follows:
+
+EX <device>_cctf,cct$,lib$
+cct$ is a  file only containing only  the names of the	rel files to be
+concatenated.
+
+There is also a small cct program which you will need for the QXL. This
+can be	found in the exe directory and	should be put into your program
+path.
+
+
+III - How to use this software
+==============================
+
+
+1 - Setting up the environment.
+
+To   make  things  easier,  I've  made  a  small  boot  program  called
+dev8_extras_compile_boot.
+
+This  will load  the linker,  assembler and  make programs  as resident
+things (to make  access faster)  and LRESPR  cline_bin,  and  will then
+execute  the SMSQEmake program. However, you  MUST, first of all, amend
+line 100 of this boot program to point to the correct device for win2_.
+
+Otherwise, just exec the  SMSQEMake  program.  It  opens  on  its  main
+screen. You can also pass the program certain command line parameters.
+
+
+2 - Description of the program
+
+A - The title bar.
+
+In  the upper titlebar, you  can see the usual	ESC, move, change size,
+sleep items.  You can also see	the DEL, Make, OK  and All items, which
+are  explained below. In the title bar there is also a drive item where
+you  can chose the drive on which the  link files can be found. In this
+version of SMSQEMake, all link files must be on the same drive. MOST IF
+NOT ALL OF THEM PRESUME THAT THE FILES TO BE ASSEMLED RESIDE ON DEV8_.
+
+
+B - The target row
+
+Under	the  title  bar,  there  is  a	row  with  many  buttons.  They
+select/deselect the  "targets" for  which you  want to	(re)compile the
+sources. The names of the targets should be self-explanatory.
+
+
+C - The link files window
+
+Underneath  this is  the application  subwindow with  the names  of the
+"link" files.  As you  select/deselect the  targets, the  relevant link
+files for this target are added to, or deleted from, this window.
+
+
+D - The "All" item
+
+The  'All' item selects/deselects all of the link files. Of course, you
+can also de/select any of the link files individually, just by clicking
+on them.
+
+
+E - The "OK" item
+
+When you hit/do the "OK" item, all selected link files will be treated,
+so that all new files in it will be compiled.
+
+
+F - The "DEL" item
+
+If the DEL item is selected, then, before a compilation run is started,
+SMSQEMake will	try to delete  all previously compiled	files, i.e. all
+_rel,  _err, _map_, _log and _lib files (but not, of course, the source
+files  themselves!) and the compiled targets. This is done by "EXECing"
+the file called  "dev8_extras_del_all_bas". Note  that EXECing	a basic
+file is a feature of SMSQ/E and may not work under different OSes
+
+Please also note:
+-----------------
+For this to work, you must LRESPR a file called "dev8_extras_cline_bin"
+into job 0.  If you don't,  the program will  not work. If  you run the
+boot program in job 0, this is done automatically.
+
+
+G - The "Make" item
+
+There is  also a  "Make" item.	If you	select that  before compilation
+starts, then, if  there was no	error during compilation  of the source
+file(s)  for a certain target, the  resulting target file will actuallybe  built. You can also simply rebuild a target by selecting the target
+and deselecting all link files for it, if the MAKE button is selected.
+
+
+The targets made will be called as follows, <dev> being the device with
+the sources (I presume dev8_):
+
+For the Atari:
+<dev> smsq_atari_SMSQ.PRG.
+
+
+For the (Super)GoldCard:
+<dev> SMSQ_GOLD_gold
+<dev> SMSQ_GOLD_gold8
+
+
+For the Qx0:
+<dev> smsq_q40_rom
+
+
+For the QXL:
+<dev> smsq_qxl_smsqe.exe
+
+
+For SMSQmulator:
+<dev> smsq_java_java
+
+
+For Aurora:
+<dev> smsq_aurora_SMSQE
+
+
+For ptr_gen (includeds wman):
+<dev> ee_ptr_gen
+<dev> ee_wman_wman
+
+
+For QPC:
+<dev> smsq_qpc_smsqe.bin
+
+
+H - The "SaT" item
+
+This item simply Selects all Targets.
+
+
+
+I - Command line parameters
+
+It is possible to pass command	line  parameters  to  the  program,  as
+follows:
+"-as" means : autostart ON: the program will start compilation
+immediately
+"-q0" means : quit after compilation if 0 errors.
+"-qa" means : quit always after compilation even if there were
+errors.
+"-sa" means : set (select) all files of selected targets
+"-de" means delete all compiled (REL) and target files first
+"-mk" means : make targets (see "make item" above)
+"-de" means : delete compiled files first (see "DEL" item above)
+"-fa" means force assembly
+"-tg" means : set the Generic target
+"-ti" means : set atarI target
+"-to" means : set goLdcard target
+"-tq" means : set Qx0 target
+"-tx" means : set qXl target
+"-tj" means : set Java target (SMSQmulator)
+"-tc" means : set qpC target
+"-tu" means : set aUrora target
+"-tr" means : set ptRgen (and wamn) target
+"-ta" means : set ALL targets
+"-tr" means : set ptRgen (and wamn) target
+
+
+J - A proposed way of working
+
+I propose you use this program as follows:
+
+LOAD the dev8_extras_compile_boot  program.  This  sets  up  the  dev8_
+device	to point to win2_. remember, if your device with the sources is
+not win2_, change it in line 100.
+
+Select your target(s).	Select	the  link  file(s)  to	be  recompiled,
+possibly with the All item.
+
+Set the "Make" item so that  a	final  version	will  be  built.  Start
+everything with "OK".
+
+K - Error reports
+
+Report facilties in  this program  are, as  yet, very  rudimentary: The
+program tries to compile all files depending an any selected link file.
+If  there is  any error,  then anerror	message popus  up and  the link
+filename stays	selected. If the  files compiled (and  linked) OK, then
+the link filename is deselected.
+
+Thus,  at the end of a compile run,  you can see whether all link files
+compiled OK or not - if they stay selected, there was en error.
+
+
+IV - Recompiling or changing SMSQEMake
+======================================
+
+The source for SMSQEMake is  in  the  extras_exe_source  directory.  To
+compile it, you will  need  the  dev8_extras_source_SMSQEMake_bin  file
+(containing the compilation  options),	the  outptr_bin  file  (in  the
+dev8_extras_exe_source	directory and the QPTR extensions. All of these
+files must be LRESPR'd before compilation.
+
+
+
+Legal stuff.
+
+This  program is freeware but copyright (c) W. Lenerz 2003-2014. It may
+not  be sold in any shape or form,  nor may you charge for copying this
+program nor for  the support on  which this program  is copied (!!!!!).
+This document  MUST accompany all versions of  this program even if you
+made changes yourself.
+
+
+If you	breach the above provisions, and/or  if you make changes and/or
+give it to others without due credit to me - may you rot in hell.
+
+
+
+QL forever!
+
+
+W. Lenerz
